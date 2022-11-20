@@ -4,8 +4,9 @@
 
 Main_Window::Main_Window()
 {
-  set_title("TCCL");
+  set_title("TLLC");
   set_border_width(10);
+  set_icon_name("images/icon.png");
   add(w_box);
         struct udev *udev;
         struct udev_device *dev;
