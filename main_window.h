@@ -2,6 +2,7 @@
 #define MAIN_WINDOW_H
 
 #include <gtkmm/checkbutton.h>
+#include <gtkmm/button.h>
 #include <gtkmm/box.h>
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
@@ -19,7 +20,9 @@ public:
 
 protected:
   //Member widgets:
+  Gtk::Box v_box;
   Gtk::Box w_box;
+  Gtk::Button next_button;
   Device_Box dev_box;
 };
 
