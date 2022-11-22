@@ -2,6 +2,7 @@
 #define MAIN_WINDOW_H
 
 #include <gtkmm/checkbutton.h>
+#include <gtkmm/button.h>
 #include <gtkmm/box.h>
 #include <gtkmm/button.h>
 #include <gtkmm/image.h>

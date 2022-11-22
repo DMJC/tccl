@@ -63,12 +63,14 @@ Main_Window::Main_Window()
                 devmodel = udev_device_get_sysattr_value(dev, "id/product");
 		string devmodel_img = strcat((char*)devmodel, ".png");
 		devmodel_img = "images/" + devmodel_img;
-                cout << devmodel << " ";
+//                cout << devmodel << " ";
                 devpath = udev_device_get_devpath(dev);
-                cout << "DEVPATH=" << devpath << " ";
+//                cout << "DEVPATH=" << devpath << " ";
                 name =  udev_device_get_sysattr_value(dev, "name");
                 cout << name << endl;
 		Device_Box *dev_box = new Device_Box(name, devmodel_img, i);
+//                cout << name << endl;
+		Device_Box *dev_box = new Device_Box(name, devmodel_img);
 		all_buttons[name] = dev_box;
 		i--;
 		d_box.add(*dev_box);
@@ -78,7 +80,9 @@ Main_Window::Main_Window()
         /* free udev */
         udev_unref(udev);
 
-  w_box.show_all();
+ next_button.set_label("Next");
+ v_box.add(next_button);
+ v_box.show_all();
 }
 
 Main_Window::~Main_Window()

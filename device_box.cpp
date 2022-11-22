@@ -1,4 +1,5 @@
 #include "device_box.h"
+#include <iostream>
 
 void Device_Box::on_button_toggled()
 {
