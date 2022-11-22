@@ -18,43 +18,24 @@ void create_axis_binding(ofstream& profile, string description, int device, int 
 void create_button_binding(ofstream& profile, string description, int device, int button, int bound_button, int use_alternate, int alternate_button) {
 	profile << "-- " << description << endl;
 	profile << "function d" << device << "_b"<< button << "_event(value)" << endl;
-	profile << "      send_axis_event(0, " << bound_button << ", value)" << endl;
-	if (use_alternate == 1 ){
-		profile <<"\tend" << endl;
-	}
+	profile << "   if value == 1 then" << endl;
+	profile << "      send_button_event(0, " << bound_button << ", " << 1 << ")" << endl;
+	profile << "   else" << endl;
+	profile << "      send_button_event(0, " << bound_button << ", " << 0 << ")" << endl;
+	profile << "   end" << endl;
 	profile << "end\n" << endl;
-
-	if (use_alternate == 1 ){
-		profile << "   if value == 1 then" << endl;
-	}
-
-void create_button_keyboard_binding(ofstream& profile, string description, int device, int button, int bound_button, int use_alternate, int alternate_button) {
-	profile << "-- " << description << endl;
-	profile << "function d" << device << "_b"<< button << "_event(value)" << endl;
-	profile << "      send_axis_event(0, " << bound_button << ", value)" << endl;
-	if (use_alternate == 1 ){
-		profile <<"\tend" << endl;
-	}
-	profile << "end\n" << endl;
-
-	if (use_alternate == 1 ){
-		profile << "   if value == 1 then" << endl;
-	}
-
-
-
-
-
-function d1_b0_event(value)
-   if value == 1 then
-      send_keyboard_event(KEY_A, 1)
-   else
-      send_keyboard_event(KEY_A, 0)
-   end
-end
-
-
 }
+
+void create_button_keyboard_binding(ofstream& profile, string description, int device, int button, string bound_key, int use_alternate, string bound_key2) {
+	profile << "function d" << device << "_b"<< button << "_event(value)" << endl;
+	profile << "   if value == 1 then" << endl;
+	profile << "      send_keyboard_event(" << bound_key << ", 1)" << endl;
+	profile << "   else" << endl;
+	profile << "      send_keyboard_event(" << bound_key2 << ", 0)" << endl;
+	profile << "   end" << endl;
+	profile << "end\n" << endl;
+}
+
 
 int main(){
 	string profile_name = "profile name";
@@ -76,8 +57,15 @@ int main(){
 	profile << "-- Virtual devices \n" << "v_devices =\n" << "   {\n" << "      v0 =\n" << "         {" << endl;
 	profile << "            buttons = 51,\n" << "            axes = 14\n" << "         }\n" << "   }\n" << endl;
 
-	create_axis_binding(profile, "X-axis", 0, 1, 1, 1);
-	create_axis_binding(profile, "Y-axis", 1, 1, 2, 0);
+
+	create_button_keyboard_binding(profile, "Trigger", 0, 1, 1, 0, 0);
+	create_button_keyboard_binding(profile, "Weapon Release", 0, 1, 1, 0, 0);
+
+	create_button_binding(profile, "Trigger", 0, 1, 1, 0, 0);
+	create_button_binding(profile, "Weapon Release", 0, 3, 3, 1, 1);
+
+	create_axis_binding(profile, "X-axis", 0, 0, 1, 1);
+	create_axis_binding(profile, "Y-axis", 0, 1, 2, 0);
 
 	profile.close();
 	return 0;
