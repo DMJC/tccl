@@ -1,3 +1,7 @@
-axes[2][2] = {{axis_0, "Right toe Brake" },
-	      {axis_1, "Left toe Brake" },
-	      {axis_2, "Rudder"}};
+#ifndef PENDULAR_RUDDER_H
+#define PENDULAR_RUDDER_H
+#include <string>
+#include <vector>
+using namespace std;
+vector<vector<string>> pendular_rudder_axes(void);
+#endif //PENDULAR_RUDDER_H

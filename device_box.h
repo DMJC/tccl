@@ -6,8 +6,14 @@
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
 #include <string>
+#include <map>
 #include <iterator>
 #include <iostream>
+#include "devices/pendular_rudder.h"
+#include "devices/tflight_hotas.h"
+#include "devices/tflight_rudder.h"
+#include "devices/warthog_stick.h"
+#include "devices/warthog_throttle.h"
 
 using namespace std;
 
@@ -16,28 +22,16 @@ class Device_Box : public Gtk::Box
   Gtk::Label m_label;
 
 public:
-  Device_Box()
-  {
-    set_border_width(10);
-    add(m_box);
-    m_box.set_property("orientation", Gtk::ORIENTATION_VERTICAL);
-    m_label.set_label("Thrustmaster Warthog Throttle");
-    m_button.set_label("Add device to Profile");
-    m_button.signal_toggled().connect(sigc::mem_fun(*this,&Device_Box::on_button_toggled) );
-    m_box.pack_start(m_label);
-    m_box.pack_start(m_image);
-    m_box.pack_start(m_button);
-    show_all();
-  }
-
-  Device_Box(std::string label, std::string model, int dev_number) : Device_Box()
-  {
-   this->m_label.set_label(label);
-   this->m_image.set(model);
-   this->buffer = model;
-   this->device_number = dev_number;
-  }
-
+  Device_Box();
+  Device_Box(string label, string model, int dev_number);
+  void Initialize(void);
+  string get_devid(void);
+  string get_image(void);
+  int get_active(void);
+  vector<vector<string>> get_axes(void);
+  vector<vector<string>> get_buttons(void);
+  enum StringValue { evNotDefined,evWarthog_Stick,evWarthog_Throttle,evPendular_Rudder,evCougar_Stick,evCougarMFD1,evCougarMFD2,evStringValue7,evStringValue8,evStringValue9,evEnd };
+  std::map<std::string, StringValue> s_mapStringValues;
 protected:
   void on_button_toggled();
   //Member widgets:
@@ -46,6 +40,9 @@ protected:
   Gtk::CheckButton m_button;
   std::string buffer;
   int device_number;
+  int device_active;
+  vector<vector<string>> axes;
+  vector<vector<string>> buttons;
 };
 
 #endif // DEVICE_BOX_H

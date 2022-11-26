@@ -1,6 +1,7 @@
 #include "main_window.h"
 #include <iostream>
 #include <libudev.h>
+//#include "debug.h"
 
 Main_Window::Main_Window()
 {
@@ -54,7 +55,7 @@ Main_Window::Main_Window()
         }
 
         std::string name = "button";
-        std::map<std::string, Device_Box*> all_buttons;
+	this->all_buttons;
         udev_list_entry_foreach(dev_list_entry, devices) {
                 const char *devmodel, *devpath, *name, *path;
                 path = udev_list_entry_get_name(dev_list_entry);
@@ -69,7 +70,7 @@ Main_Window::Main_Window()
                 name =  udev_device_get_sysattr_value(dev, "name");
                 cout << name << endl;
 		Device_Box *dev_box = new Device_Box(name, devmodel_img, i);
-		all_buttons[name] = dev_box;
+		this->all_buttons.push_back(dev_box);
 		i--;
 		d_box.add(*dev_box);
         }
@@ -92,5 +93,21 @@ void Main_Window::on_load_profile_button_clicked(const Glib::ustring& data)
 
 void Main_Window::on_create_profile_button_clicked(const Glib::ustring& data)
 {
-	cout << "Create a Profile Code" << endl;
+	int size = this->all_buttons.size();
+	int valid_devs = 0;
+	int i = 0;
+        for(i = 0; i < size; i++){
+		int active = this->all_buttons[i]->get_active();
+		if (active == 1){
+/*			cout << this->all_buttons[i]->get_devid() << " ";
+			cout << this->all_buttons[i]->get_image() << endl;*/
+//			this->all_buttons[i]->get_devid(), this->all_buttons[i]->get_image();
+			valid_devs++;
+		}
+	}
+	if (valid_devs == 0 && i == size) {
+		cout << "There are no devices selected for this profile" << endl;
+	}else{
+		cout << "Draw Window" << endl;
+	}
 }

@@ -10,7 +10,7 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/window.h>
 #include "device_box.h"
-#include <sigc++/connection.h>
+#include <vector>
 
 using namespace std;
 
@@ -30,6 +30,7 @@ protected:
   Gtk::Box d_box;
   Gtk::Button load_profile_button;
   Gtk::Button create_profile_button;
+  std::vector<Device_Box*> all_buttons;
 };
 
 #endif // MAIN_WINDOW_H
