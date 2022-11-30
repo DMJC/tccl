@@ -7,7 +7,7 @@ Thrustmaster Configuration Control for Linux
 How to Use:
 - TLLC will detect Thrustmaster devices connected to your PC.
 - Select the devices you wish to combine into a virtual joystick and click create profile.
-- Configure Axes and Button Mappings (Not yet Implemented)
+- Configure Axes and Button Mappings (Not yet implemented)
 - Save/Render to file which will generate a .lua script.
 - Run with wejoy (an application status icon will eventually be provided that wraps wejoy for you for easy use).
 - TLLC will output .lua files which can be loaded using wejoy. Eventually I plan to integrate launching wejoy with a selected profile into the application making it a one stop shop.
