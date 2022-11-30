@@ -23,9 +23,10 @@ class Device_Box : public Gtk::Box
 
 public:
   Device_Box();
-  Device_Box(string label, string model, int dev_number);
+  Device_Box(string label, string model, string model_img, int dev_number);
   void Initialize(void);
   string get_devid(void);
+  string get_model(void);
   string get_image(void);
   int get_active(void);
   vector<vector<string>> get_axes(void);
@@ -38,7 +39,8 @@ protected:
   Gtk::Box m_box;
   Gtk::Image m_image;
   Gtk::CheckButton m_button;
-  std::string buffer;
+  std::string m_model;
+  std::string img_buffer;
   int device_number;
   int device_active;
   vector<vector<string>> axes;

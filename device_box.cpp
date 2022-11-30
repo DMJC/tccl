@@ -18,10 +18,7 @@ Device_Box::Device_Box()
 
 void Device_Box::on_button_toggled()
 {
-  string model = this->buffer;
-  model.erase(this->buffer.size()-4);
-  model.erase(0, 7);
-  std::cout << "Device ID: " << model << " Device: " << this->device_number << " Toggled: "<< (m_button.get_active() ? "true" : "false") << std::endl;
+  std::cout << "Device ID: " << this->m_model << " Device: " << this->device_number << " Toggled: "<< (m_button.get_active() ? "true" : "false") << std::endl;
   bool state = m_button.get_active();
   if (state == true){
     this->device_active=1;
@@ -32,15 +29,17 @@ void Device_Box::on_button_toggled()
 
 string Device_Box::get_devid(void)
 {
-	string model = this->buffer;
-	model.erase(this->buffer.size()-4);
-	model.erase(0, 7);
-	return model;
+ 	return this->m_model;
 }
 
 string Device_Box::get_image(void)
 {
-	return this->buffer;
+	return this->img_buffer;
+}
+
+string Device_Box::get_model(void)
+{
+	return this->m_model;
 }
 
 int Device_Box::get_active(void)
@@ -59,8 +58,8 @@ vector<vector<string>> Device_Box::get_buttons(void)
 
 void Device_Box::Initialize()
 {
-  this->s_mapStringValues["4402"] = evWarthog_Stick;
-  this->s_mapStringValues["4404"] = evWarthog_Throttle;
+  this->s_mapStringValues["0402"] = evWarthog_Stick;
+  this->s_mapStringValues["0404"] = evWarthog_Throttle;
   this->s_mapStringValues["b68f"] = evPendular_Rudder;
   this->s_mapStringValues["0400"] = evCougar_Stick;
   this->s_mapStringValues["b351"] = evCougarMFD1;
@@ -71,29 +70,36 @@ void Device_Box::Initialize()
   this->s_mapStringValues[""] = evEnd;
 }
 
-Device_Box::Device_Box(std::string label, std::string model, int dev_number) : Device_Box()
+Device_Box::Device_Box(std::string label, std::string model, std::string model_img, int dev_number) : Device_Box()
 {
-   this->Initialize();
-   this->m_label.set_label(label);
-   this->m_image.set(model);
-   this->buffer = model;
-   this->device_number = dev_number;
-       switch(s_mapStringValues[model])
+    cout << "Label: " << label << " model: " << model << endl;
+    this->Initialize();
+    this->m_label.set_label(label);
+    this->m_image.set(model_img);
+    this->m_model = model;
+    this->img_buffer = model_img;
+    this->device_number = dev_number;
+
+    switch(s_mapStringValues[model])
     {
       case evWarthog_Stick:{
         cout << "ThrustMaster HOTAS Warthog Stick." << endl;
-	this->axes = warthog_stick_axes();
-	this->buttons = warthog_stick_buttons();
+    	this->axes = warthog_stick_axes();
+	    this->buttons = warthog_stick_buttons();
         break;}
-      case evWarthog_Throttle:{
+      case evWarthog_Throttle:
+      {
         cout << "ThrustMaster HOTAS Warthog Throttle." << endl;
-	this->axes = warthog_throttle_axes();
-	this->buttons = warthog_throttle_buttons();
-        break;}
-      case evPendular_Rudder:{
+    	this->axes = warthog_throttle_axes();
+	    this->buttons = warthog_throttle_buttons();
+        break;
+      }
+      case evPendular_Rudder:
+      {
         cout << "ThrustMaster Pendular Rudder Pedals." << endl;
-	this->axes = pendular_rudder_axes();
-        break;}
+	    this->axes = pendular_rudder_axes();
+        break;
+      }
       case evCougar_Stick:{
 	cout << "ThrustMaster HOTAS Cougar." << endl;
         break;}
@@ -113,11 +119,12 @@ Device_Box::Device_Box(std::string label, std::string model, int dev_number) : D
         cout << "ThrustMaster" << endl;
         break;}
       case evEnd:
-        cout << "FAILED, BIG PORBLEM MATE." << endl;
+        cout << "FAILED, BIG PROBLEM MATE." << endl;
       default:
         cout << "'" << dev_number << "' is an invalid string. s_mapStringValues now contains "
              << s_mapStringValues.size()
              << " entries." << endl;
         break;
     }
+    show_all();
 }

@@ -18,7 +18,6 @@ Axis_Box::Axis_Box(vector<vector<string>> axes, string image, string device)
   add(axis_box);
   this->axis_box.add(h_box);
   this->h_box.add(dev_image);
-  string device = "../images/0402.png";
   this->dev_image.set(device);
   this->h_box.add(w_box);
 //  this->axis_box.set_propagate_natural_width(TRUE);

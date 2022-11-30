@@ -10,12 +10,10 @@ using namespace std;
 
 class Axis_Box : public Gtk::Box
 {
-
 public:
   Axis_Box();
-  Axis_Box(vector<vector<string>>);
+  Axis_Box(vector<vector<string> >, string, string);
   virtual ~Axis_Box();
-
 protected:
   //Member widgets:
   Gtk::Box axis_box;

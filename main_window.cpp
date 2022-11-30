@@ -1,6 +1,4 @@
 #include "main_window.h"
-#include <iostream>
-#include <libudev.h>
 //#include "debug.h"
 
 Main_Window::Main_Window()
@@ -55,30 +53,28 @@ Main_Window::Main_Window()
         }
 
         std::string name = "button";
-	this->all_buttons;
-        udev_list_entry_foreach(dev_list_entry, devices) {
-                const char *devmodel, *devpath, *name, *path;
-                path = udev_list_entry_get_name(dev_list_entry);
-                dev = udev_device_new_from_syspath(udev, path);
-                /* device attributes */
-                devmodel = udev_device_get_sysattr_value(dev, "id/product");
-		string devmodel_img = strcat((char*)devmodel, ".png");
-		devmodel_img = "images/" + devmodel_img;
-//                cout << devmodel << " ";
-                devpath = udev_device_get_devpath(dev);
-//                cout << "DEVPATH=" << devpath << " ";
-                name =  udev_device_get_sysattr_value(dev, "name");
-                cout << name << endl;
-		Device_Box *dev_box = new Device_Box(name, devmodel_img, i);
-		this->all_buttons.push_back(dev_box);
-		i--;
-		d_box.add(*dev_box);
+	    this->all_devices;
+        udev_list_entry_foreach(dev_list_entry, devices) 
+        {
+            const char *devmodel, *devpath, *name, *path;
+            path = udev_list_entry_get_name(dev_list_entry);
+            dev = udev_device_new_from_syspath(udev, path);
+            /* device attributes */
+            devmodel = udev_device_get_sysattr_value(dev, "id/product");
+		    string devmodel_img = (string)devmodel + ".png";
+		    devmodel_img = "images/" + devmodel_img;
+            devpath = udev_device_get_devpath(dev);
+            name =  udev_device_get_sysattr_value(dev, "name");
+/*            cout << "Name: " << name << endl; cout << "Devmodel: " << devmodel << endl; cout << "Devmodel_img: " << devmodel_img << endl;*/
+		    Device_Box *dev_box = new Device_Box(name, devmodel, devmodel_img, i);
+		    this->all_devices.push_back(dev_box);
+		    i--;
+		    d_box.add(*dev_box);
         }
         /* free enumerate */
         udev_enumerate_unref(enumerate);
         /* free udev */
         udev_unref(udev);
-
   w_box.show_all();
 }
 
@@ -93,21 +89,32 @@ void Main_Window::on_load_profile_button_clicked(const Glib::ustring& data)
 
 void Main_Window::on_create_profile_button_clicked(const Glib::ustring& data)
 {
-	int size = this->all_buttons.size();
+
+	int size = 0;
+	size = this->all_devices.size();
+        this->aw_box.set_property("orientation", Gtk::ORIENTATION_VERTICAL);
 	int valid_devs = 0;
 	int i = 0;
         for(i = 0; i < size; i++){
-		int active = this->all_buttons[i]->get_active();
+		int active = this->all_devices[i]->get_active();
 		if (active == 1){
-/*			cout << this->all_buttons[i]->get_devid() << " ";
-			cout << this->all_buttons[i]->get_image() << endl;*/
-//			this->all_buttons[i]->get_devid(), this->all_buttons[i]->get_image();
+			string image= this->all_devices[i]->get_image();
+			string devid = this->all_devices[i]->get_devid();
+			cout  << /* "Axes: " << axes <<*/ "Image: " << image << " Dev ID: " << devid << endl;
+    			Axis_Box *dev_axe_box = new Axis_Box(this->all_devices[i]->get_axes(), this->all_devices[i]->get_image(), this->all_devices[i]->get_devid());
+			this->all_device_axis_boxes.push_back(dev_axe_box);
+			this->aw_box.add(*dev_axe_box);
 			valid_devs++;
 		}
 	}
 	if (valid_devs == 0 && i == size) {
 		cout << "There are no devices selected for this profile" << endl;
 	}else{
-		cout << "Draw Window" << endl;
+		cout << "adding axes box to window" << endl;
+		this->axes_window.axes_w_box.add(aw_box);
+		Gtk::Button next_button;
+		this->axes_window.axes_w_box.add(next_button);
+		this->axes_window.axes_w_box.show_all();
+		this->axes_window.show();
 	}
 }
