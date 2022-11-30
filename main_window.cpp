@@ -89,7 +89,6 @@ void Main_Window::on_load_profile_button_clicked(const Glib::ustring& data)
 
 void Main_Window::on_create_profile_button_clicked(const Glib::ustring& data)
 {
-
 	int size = 0;
 	size = this->all_devices.size();
         this->aw_box.set_property("orientation", Gtk::ORIENTATION_VERTICAL);
@@ -102,7 +101,8 @@ void Main_Window::on_create_profile_button_clicked(const Glib::ustring& data)
 			string devid = this->all_devices[i]->get_devid();
 			cout  << /* "Axes: " << axes <<*/ "Image: " << image << " Dev ID: " << devid << endl;
     			Axis_Box *dev_axe_box = new Axis_Box(this->all_devices[i]->get_axes(), this->all_devices[i]->get_image(), this->all_devices[i]->get_devid());
-			this->all_device_axis_boxes.push_back(dev_axe_box);
+			this->axes_window.all_device_axis_boxes.push_back(dev_axe_box);
+//			this->all_device_axis_boxes.push_back(dev_axe_box);
 			this->aw_box.add(*dev_axe_box);
 			valid_devs++;
 		}

@@ -39,8 +39,6 @@ protected:
   Gtk::Button load_profile_button;
   Gtk::Button create_profile_button;
   std::vector<Device_Box*> all_devices;
-  std::vector<Axis_Box*> all_device_axis_boxes;
-//  std::vector<Device_Buttons*> all_device_buttons;
 };
 
 #endif // MAIN_WINDOW_H

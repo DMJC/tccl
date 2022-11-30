@@ -19,7 +19,7 @@ Axis_Box::Axis_Box(vector<vector<string>> axes, string image, string device) : A
     int size = 0;
     size = axes.size();
         for(int i = 0; i < size; i++){
-            string name = axes[i][0];
+            string name = axes[i][1];
             string description = axes[i][1];
 	    cout << "name: " << name << " axis description: " << description << endl;
 	    name = name + ": ";

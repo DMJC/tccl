@@ -24,5 +24,6 @@ Axis_Window::~Axis_Window()
 
 void Axis_Window::on_next_button_clicked(const Glib::ustring& data)
 {
+
 	cout << "Clicked, time for Button Mappings!" << endl;
 }

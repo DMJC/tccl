@@ -8,6 +8,7 @@
 #include <gtkmm/label.h>
 #include <gtkmm/window.h>
 #include "device_box.h"
+#include "axis_box.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ public:
   Gtk::ScrolledWindow axes_s_box;
   Gtk::Button next_button;
   Device_Box dev_box;
+  std::vector<Axis_Box*> all_device_axis_boxes;
 protected:
   void on_next_button_clicked(const Glib::ustring& data);
 };
