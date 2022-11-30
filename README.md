@@ -12,7 +12,7 @@ How to Use:
 - TLLC will output .lua files which can be loaded using wejoy. Eventually I plan to integrate launching wejoy with a selected profile into the application making it a one stop shop.
 ---
 Caveats/Issues
-Device ordering is based on libudev enumeration. This can be somewhat affected by swapping devices around USB ports and is purely cosmetic. It has no bearing on the operation of the binding.
+- Device ordering is based on libudev enumeration. This can be somewhat affected by swapping devices around USB ports and is purely cosmetic. It has no bearing on the operation of the binding.
 ---
 Screenshots:
 ![TCCL Main Page](https://user-images.githubusercontent.com/732515/204790875-c5a0cb54-1264-4bbf-b3aa-ae9f81ffe217.png)
