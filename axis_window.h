@@ -1,7 +1,7 @@
 #ifndef AXIS_WINDOW_H
 #define AXIS_WINDOW_H
 
-#include <gtkmm/checkbutton.h>
+#include <gtkmm/button.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/box.h>
 #include <gtkmm/image.h>
@@ -20,9 +20,10 @@ public:
   //Member widgets:
   Gtk::Box axes_w_box;
   Gtk::ScrolledWindow axes_s_box;
+  Gtk::Button next_button;
   Device_Box dev_box;
-
 protected:
+  void on_next_button_clicked(const Glib::ustring& data);
 };
 
 #endif // AXIS_WINDOW_H

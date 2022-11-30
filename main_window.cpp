@@ -113,7 +113,8 @@ void Main_Window::on_create_profile_button_clicked(const Glib::ustring& data)
 		cout << "adding axes box to window" << endl;
 		this->axes_window.axes_w_box.add(aw_box);
 		Gtk::Button next_button;
-		this->axes_window.axes_w_box.add(next_button);
+		next_button.set_label("Next");
+		this->aw_box.add(this->axes_window.next_button);
 		this->axes_window.axes_w_box.show_all();
 		this->axes_window.show();
 	}
