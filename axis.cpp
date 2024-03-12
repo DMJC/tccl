@@ -22,14 +22,29 @@ Axis::Axis()
 
 	    /*Creating the Widget*/
 	    add(axis_box);
+	    this->axis_box.set_homogeneous(TRUE);
 	    this->axis_label.set_label("X-Axis");
 	    this->axis_button.set_image_from_icon_name("gtk-go-forward");
 	    this->axis_box.pack_start(axis_label);
+	    this->axis_label.set_halign(Gtk::ALIGN_END);
 	    this->axis_box.pack_start(axis_dropdown);
 	    axis_dropdown.signal_changed().connect( sigc::mem_fun(*this, &Axis::on_combo_changed) );
+	    axis_button.signal_clicked().connect( sigc::bind(sigc::mem_fun(*this, &Axis::on_axis_button_clicked), "button 1"));
 	    this->axis_box.pack_start(axis_button);
+	    this->axis_setting_label.set_width_chars(20);
+	    this->axis_box.pack_start(axis_setting_label);
 	    this->axis_box.show_all();
 }
+
+void Axis::on_axis_button_clicked(const Glib::ustring& data)
+{
+        cout << "Map this axis" << endl;
+	const auto iter = axis_dropdown.get_active();
+        const auto row = *iter;
+	this->axis_setting_label.set_text(row[axis_columns.axis_col_name]);
+}
+
+
 
 void Axis::on_combo_changed()
 {
@@ -56,4 +71,9 @@ Axis::Axis(std::string label, std::string description)
 {
 	this->axis_label.set_label(label);
 	this->axis_dropdown.set_active_id(description);
+}
+
+string Axis::get_mapping()
+{
+	return this->axis_label.get_text();
 }

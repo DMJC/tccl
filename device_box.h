@@ -12,6 +12,7 @@
 #include "devices/pendular_rudder.h"
 #include "devices/tflight_hotas.h"
 #include "devices/tflight_rudder.h"
+#include "devices/cougar_stick.h"
 #include "devices/warthog_stick.h"
 #include "devices/warthog_throttle.h"
 
@@ -28,6 +29,7 @@ public:
   string get_devid(void);
   string get_model(void);
   string get_image(void);
+  string get_label(void);
   int get_active(void);
   vector<vector<string>> get_axes(void);
   vector<vector<string>> get_buttons(void);
@@ -40,6 +42,7 @@ protected:
   Gtk::Image m_image;
   Gtk::CheckButton m_button;
   std::string m_model;
+  std::string m_devid;
   std::string img_buffer;
   int device_number;
   int device_active;

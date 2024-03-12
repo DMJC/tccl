@@ -1,6 +1,7 @@
 #ifndef AXIS_WINDOW_H
 #define AXIS_WINDOW_H
 
+#include <gtkmm/paned.h>
 #include <gtkmm/button.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/box.h>
@@ -19,7 +20,7 @@ public:
   Axis_Window();
   virtual ~Axis_Window();
   //Member widgets:
-  Gtk::Box axes_w_box;
+  Gtk::Box axes_w_box1;
   Gtk::ScrolledWindow axes_s_box;
   Gtk::Button next_button;
   Device_Box dev_box;

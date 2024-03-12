@@ -39,7 +39,7 @@ string Device_Box::get_image(void)
 
 string Device_Box::get_model(void)
 {
-	return this->m_model;
+	return this->m_label.get_text();
 }
 
 int Device_Box::get_active(void)
@@ -102,6 +102,8 @@ Device_Box::Device_Box(std::string label, std::string model, std::string model_i
       }
       case evCougar_Stick:{
 	cout << "ThrustMaster HOTAS Cougar." << endl;
+    	this->axes = cougar_stick_axes();
+	    this->buttons = cougar_stick_buttons();
         break;}
       case evCougarMFD1:{
         cout << "ThrustMaster Cougar MFD1" << endl;

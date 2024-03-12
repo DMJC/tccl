@@ -6,10 +6,14 @@ Axis_Box::Axis_Box()
 {
 }
 
-Axis_Box::Axis_Box(vector<vector<string>> axes, string image, string device) : Axis_Box()
+Axis_Box::Axis_Box(vector<vector<string>> axes, string image, string device, string device_name) : Axis_Box()
 {
     add(axis_box);
-    this->axis_box.add(h_box);
+    this->axis_box.add(v_box);
+    this->v_box.set_property("orientation", Gtk::ORIENTATION_VERTICAL);
+    this->device_label.set_text(device_name);
+    this->v_box.add(device_label);
+    this->v_box.add(h_box);
     this->h_box.add(dev_image);
     this->dev_image.set(image);
     this->h_box.add(w_box);
@@ -35,3 +39,7 @@ Axis_Box::~Axis_Box()
 
 }
 
+void Axis_Box::get_bindings()
+{
+
+}

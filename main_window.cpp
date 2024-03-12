@@ -6,8 +6,8 @@ Main_Window::Main_Window()
 	set_title("TCCL");
 	set_border_width(10);
 	add(w_box);
-	w_box.set_property("orientation", Gtk::ORIENTATION_VERTICAL);
 	this->w_box.add(load_profile_button);
+	w_box.set_property("orientation", Gtk::ORIENTATION_VERTICAL);
 	this->load_profile_button.set_label("Load Profile");
  	load_profile_button.signal_clicked().connect(sigc::bind(sigc::mem_fun(*this, &Main_Window::on_load_profile_button_clicked), "button 1"));
  	create_profile_button.signal_clicked().connect(sigc::bind(sigc::mem_fun(*this, &Main_Window::on_create_profile_button_clicked), "button 2"));
@@ -46,14 +46,13 @@ Main_Window::Main_Window()
                 fprintf(stderr, "Re-run after connecting at least one supported device.\n");
 		exit(1);
         }
-
         int i = -1;
         udev_list_entry_foreach(dev_list_entry, devices) {
                 i++;
         }
 
         std::string name = "button";
-	    this->all_devices;
+	this->all_devices;
         udev_list_entry_foreach(dev_list_entry, devices) 
         {
             const char *devmodel, *devpath, *name, *path;
@@ -91,7 +90,7 @@ void Main_Window::on_create_profile_button_clicked(const Glib::ustring& data)
 {
 	int size = 0;
 	size = this->all_devices.size();
-        this->aw_box.set_property("orientation", Gtk::ORIENTATION_VERTICAL);
+    this->ab_box.set_property("orientation", Gtk::ORIENTATION_VERTICAL);
 	int valid_devs = 0;
 	int i = 0;
         for(i = 0; i < size; i++){
@@ -99,11 +98,19 @@ void Main_Window::on_create_profile_button_clicked(const Glib::ustring& data)
 		if (active == 1){
 			string image= this->all_devices[i]->get_image();
 			string devid = this->all_devices[i]->get_devid();
-			cout  << /* "Axes: " << axes <<*/ "Image: " << image << " Dev ID: " << devid << endl;
-    			Axis_Box *dev_axe_box = new Axis_Box(this->all_devices[i]->get_axes(), this->all_devices[i]->get_image(), this->all_devices[i]->get_devid());
-			this->axes_window.all_device_axis_boxes.push_back(dev_axe_box);
-//			this->all_device_axis_boxes.push_back(dev_axe_box);
-			this->aw_box.add(*dev_axe_box);
+			cout  << "Image: " << image << " Dev ID: " << devid << endl;
+			/*Test for Cougar MFDs (Devices with no Axes)*/
+			if (this->all_devices[i]->get_devid() != "b351" || "b352")
+			{
+    				Axis_Box *dev_axe_box = new Axis_Box(this->all_devices[i]->get_axes(), this->all_devices[i]->get_image(), this->all_devices[i]->get_devid(), this->all_devices[i]->get_model());
+				this->ab_box.add(*dev_axe_box);
+			}
+			/*Test for Rudder Pedals (Devices with no Buttons)*/
+			if (this->all_devices[i]->get_devid() != "b68f" /*|| "RUDDERS GO HERE"*/)
+			{
+    				Joy_Button_Box *dev_but_box = new Joy_Button_Box(this->all_devices[i]->get_buttons(), this->all_devices[i]->get_image(), this->all_devices[i]->get_devid(), this->all_devices[i]->get_model());
+				this->ab_box.add(*dev_but_box);
+			}
 			valid_devs++;
 		}
 	}
@@ -111,11 +118,11 @@ void Main_Window::on_create_profile_button_clicked(const Glib::ustring& data)
 		cout << "There are no devices selected for this profile" << endl;
 	}else{
 		cout << "adding axes box to window" << endl;
-		this->axes_window.axes_w_box.add(aw_box);
+		this->axes_window.axes_s_box.add(ab_box);
 		Gtk::Button next_button;
 		next_button.set_label("Next");
-		this->aw_box.add(this->axes_window.next_button);
-		this->axes_window.axes_w_box.show_all();
+		this->ab_box.add(this->axes_window.next_button);
+		this->axes_window.axes_w_box1.show_all();
 		this->axes_window.show();
 	}
 }

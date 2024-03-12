@@ -14,7 +14,10 @@ class Axis : public Gtk::Box
 {
 public:
 	Axis();
+	void on_axis_button_clicked(const Glib::ustring&);
 	Axis(std::string, std::string);
+	string get_mapping();
+
 protected:
 	void on_combo_changed();
 
@@ -36,5 +39,6 @@ protected:
 	Gtk::Button axis_button;
 	Gtk::Label axis_label;
 	Gtk::ComboBox axis_dropdown;
+	Gtk::Label axis_setting_label;
 };
 #endif /*AXIS_H*/
