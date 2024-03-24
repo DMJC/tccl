@@ -11,7 +11,8 @@ How to Use:
 - Run with wejoy (an application status icon will eventually be provided that wraps wejoy for you for easy use).
 - TLLC will output .lua files which can be loaded using wejoy. Eventually I plan to integrate launching wejoy with a selected profile into the application making it a one stop shop.
 ---
-Caveats/Issues
+TODO/Caveats/Issues
+- Implement Profile Loading.
 - Device ordering is based on libudev enumeration. This can be somewhat affected by swapping devices around USB ports and is purely cosmetic. It has no bearing on the operation of the binding.
 ---
 Screenshots:
