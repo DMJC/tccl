@@ -9,10 +9,13 @@
 #include <map>
 #include <iterator>
 #include <iostream>
-#include "devices/pendular_rudder.h"
-#include "devices/tflight_hotas.h"
-#include "devices/tflight_rudder.h"
+#include "devices/cougar_mfd.h"
 #include "devices/cougar_stick.h"
+#include "devices/cougar_throttle.h"
+#include "devices/pendular_rudder.h"
+#include "devices/t16000m_stick.h"
+#include "devices/tflight_rudder.h"
+#include "devices/twcs_throttle.h"
 #include "devices/warthog_stick.h"
 #include "devices/warthog_throttle.h"
 
@@ -33,7 +36,7 @@ public:
   int get_active(void);
   vector<vector<string>> get_axes(void);
   vector<vector<string>> get_buttons(void);
-  enum StringValue { evNotDefined,evWarthog_Stick,evWarthog_Throttle,evPendular_Rudder,evCougar_Stick,evCougarMFD1,evCougarMFD2,evStringValue7,evStringValue8,evStringValue9,evEnd };
+  enum StringValue { evNotDefined,evWarthog_Stick,evWarthog_Throttle,evPendular_Rudder,evCougar_Stick,evCougarMFD1,evCougarMFD2,evTFlight_Stick,evTFlight_Rudder,evTWCS_Throttle,evEnd };
   std::map<std::string, StringValue> s_mapStringValues;
 protected:
   void on_button_toggled();

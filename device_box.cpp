@@ -64,9 +64,9 @@ void Device_Box::Initialize()
   this->s_mapStringValues["0400"] = evCougar_Stick;
   this->s_mapStringValues["b351"] = evCougarMFD1;
   this->s_mapStringValues["b352"] = evCougarMFD2;
-  this->s_mapStringValues["b10a"] = evStringValue7;
-  this->s_mapStringValues["b678"] = evStringValue8;
-  this->s_mapStringValues["b687"] = evStringValue9;
+  this->s_mapStringValues["b10a"] = evTFlight_Stick;
+  this->s_mapStringValues["b678"] = evTFlight_Rudder;
+  this->s_mapStringValues["b687"] = evTWCS_Throttle;
   this->s_mapStringValues[""] = evEnd;
 }
 
@@ -85,40 +85,49 @@ Device_Box::Device_Box(std::string label, std::string model, std::string model_i
       case evWarthog_Stick:{
         cout << "ThrustMaster HOTAS Warthog Stick." << endl;
     	this->axes = warthog_stick_axes();
-	    this->buttons = warthog_stick_buttons();
+	this->buttons = warthog_stick_buttons();
         break;}
       case evWarthog_Throttle:
       {
         cout << "ThrustMaster HOTAS Warthog Throttle." << endl;
     	this->axes = warthog_throttle_axes();
-	    this->buttons = warthog_throttle_buttons();
+	this->buttons = warthog_throttle_buttons();
         break;
       }
       case evPendular_Rudder:
       {
         cout << "ThrustMaster Pendular Rudder Pedals." << endl;
-	    this->axes = pendular_rudder_axes();
+	this->axes = pendular_rudder_axes();
         break;
       }
       case evCougar_Stick:{
 	cout << "ThrustMaster HOTAS Cougar." << endl;
     	this->axes = cougar_stick_axes();
-	    this->buttons = cougar_stick_buttons();
-        break;}
-      case evCougarMFD1:{
+	this->buttons = cougar_stick_buttons();
+        break;
+      }
+      case evCougarMFD1:
+      {
         cout << "ThrustMaster Cougar MFD1" << endl;
+	this->buttons = cougar_mfd_buttons();
         break;}
       case evCougarMFD2:{
         cout << "ThrustMaster Cougar MFD2" << endl;
+	this->buttons = cougar_mfd1_buttons();
         break;}
-      case evStringValue7:{
-        cout << "ThrustMaster" << endl;
+      case evTFlight_Stick:{
+        cout << "ThrustMaster T.16000M Joystick" << endl;
+//	this->axes = 
+//	this->buttons = 
         break;}
-      case evStringValue8:{
-        cout << "ThrustMaster" << endl;
+      case evTFlight_Rudder:{
+        cout << "ThrustMaster T.Flight Rudder Pedals" << endl;
+	this->axes = tflight_rudder_axes();
         break;}
-      case evStringValue9:{
-        cout << "ThrustMaster" << endl;
+      case evTWCS_Throttle:{
+        cout << "ThrustMaster TWCS Throttle" << endl;
+//	this->axes = 
+//	this->buttons = 
         break;}
       case evEnd:
         cout << "FAILED, BIG PROBLEM MATE." << endl;
