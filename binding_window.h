@@ -5,11 +5,13 @@
 #include <gtkmm/button.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/scrolledwindow.h>
+#include <gtkmm/filechooserdialog.h>
 #include <gtkmm/box.h>
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
 #include <gtkmm/window.h>
 #include <iostream>
+#include <fstream>
 #include <libudev.h>
 #include <vector>
 #include "device_box.h"

@@ -24,6 +24,10 @@ public:
 	int device;
 	int axis;
 	string get_name(void);
+	int get_inverted(void);
+	void set_inverted(int);
+	void set_value(string);
+	string get_value(void);
 protected:
 	void on_combo_changed();
 
@@ -33,12 +37,14 @@ protected:
 	  public:
 
 	    ModelColumns()
-	    { add(axis_col_id); add(axis_col_name);}
+	    { add(axis_col_id); add(axis_col_name); add(axis_col_value);}
 
 	    Gtk::TreeModelColumn<int> axis_col_id;
 	    Gtk::TreeModelColumn<Glib::ustring> axis_col_name;
+	    Gtk::TreeModelColumn<Glib::ustring> axis_col_value;
 	  };
-
+	int inverted;
+	string value;
 	ModelColumns axis_columns;
 	Glib::RefPtr<Gtk::ListStore> axis_refTreeModel;
 	Gtk::Box axis_box;
