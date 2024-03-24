@@ -1,6 +1,8 @@
 #ifndef AXIS_H
 #define AXIS_H
 #include <gtkmm/comboboxtext.h>
+#include <gtkmm/checkbutton.h>
+#include <gtkmm/eventbox.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/box.h>
 #include <gtkmm/button.h>
@@ -14,10 +16,14 @@ class Axis : public Gtk::Box
 {
 public:
 	Axis();
+	void on_axis_label_clicked(GdkEventButton*);
 	void on_axis_button_clicked(const Glib::ustring&);
-	Axis(std::string, std::string);
+	void on_axis_invert_clicked(const Glib::ustring&);
+	Axis(int, string, string);
 	string get_mapping();
-
+	int device;
+	int axis;
+	string get_name(void);
 protected:
 	void on_combo_changed();
 
@@ -36,7 +42,9 @@ protected:
 	ModelColumns axis_columns;
 	Glib::RefPtr<Gtk::ListStore> axis_refTreeModel;
 	Gtk::Box axis_box;
+	Gtk::CheckButton axis_invert;
 	Gtk::Button axis_button;
+	Gtk::EventBox axis_labeleb;
 	Gtk::Label axis_label;
 	Gtk::ComboBox axis_dropdown;
 	Gtk::Label axis_setting_label;

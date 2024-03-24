@@ -8,7 +8,6 @@ Axis::Axis()
 	    axis_dropdown.set_model(axis_refTreeModel);
 	    auto iter = axis_refTreeModel->append();
 	    auto row = *iter;
-
 	    row[axis_columns.axis_col_id] = 0;
 	    row[axis_columns.axis_col_name] = axis_maps[0][1];
   	    axis_dropdown.set_active(iter);
@@ -19,57 +18,78 @@ Axis::Axis()
 		  row[axis_columns.axis_col_name] = axis_maps[i][1];
 	    }
  	    axis_dropdown.pack_start(axis_columns.axis_col_name);
-
 	    /*Creating the Widget*/
 	    add(axis_box);
-	    this->axis_box.set_homogeneous(TRUE);
 	    this->axis_label.set_label("X-Axis");
+	    this->axis_label.set_width_chars(31);
+	    this->axis_button.set_hexpand(TRUE);
 	    this->axis_button.set_image_from_icon_name("gtk-go-forward");
+	    this->axis_button.set_hexpand(FALSE);
+	    this->axis_invert.set_label("Invert: ");
 	    this->axis_box.pack_start(axis_label);
 	    this->axis_label.set_halign(Gtk::ALIGN_END);
+	    axis_label.set_halign(Gtk::ALIGN_END);
 	    this->axis_box.pack_start(axis_dropdown);
+	    this->axis_box.pack_start(axis_invert);
 	    axis_dropdown.signal_changed().connect( sigc::mem_fun(*this, &Axis::on_combo_changed) );
-	    axis_button.signal_clicked().connect( sigc::bind(sigc::mem_fun(*this, &Axis::on_axis_button_clicked), "button 1"));
+//	    axis_labeleb.signal_button_press_event().connect( sigc::bind(sigc::mem_fun(*this, &Axis::on_axis_label_clicked));
+	    axis_button.signal_clicked().connect(sigc::bind(sigc::mem_fun(*this, &Axis::on_axis_button_clicked), "button 1"));
+	    axis_invert.signal_clicked().connect(sigc::bind(sigc::mem_fun(*this, &Axis::on_axis_invert_clicked), "button 1"));
 	    this->axis_box.pack_start(axis_button);
 	    this->axis_setting_label.set_width_chars(20);
 	    this->axis_box.pack_start(axis_setting_label);
 	    this->axis_box.show_all();
 }
 
-void Axis::on_axis_button_clicked(const Glib::ustring& data)
+void Axis::on_axis_label_clicked(GdkEventButton* event)
 {
-        cout << "Map this axis" << endl;
-	const auto iter = axis_dropdown.get_active();
-        const auto row = *iter;
-	this->axis_setting_label.set_text(row[axis_columns.axis_col_name]);
+
 }
 
+void Axis::on_axis_invert_clicked(const Glib::ustring& data)
+{
+   cout << "Set Axis to Invert" << endl;
+}
 
+void Axis::on_axis_button_clicked(const Glib::ustring& data)
+{
+	const auto iter = axis_dropdown.get_active();
+    const auto row = *iter;
+	this->axis_setting_label.set_text(row[axis_columns.axis_col_name]);
+	
+}
+
+string Axis::get_name(void)
+{
+	return this->axis_label.get_text();
+}
 
 void Axis::on_combo_changed()
 {
-  const auto iter = axis_dropdown.get_active();
-  if(iter)
-  {
-    const auto row = *iter;
-    if(row)
+    const auto iter = axis_dropdown.get_active();
+    if(iter)
     {
-      //Get the data for the selected row, using our knowledge of the tree
-      //model:
-      int id = row[axis_columns.axis_col_id];
-      Glib::ustring name = row[axis_columns.axis_col_name];
-
-      cout << " ID=" << id << ", Axis Binding=" << name << endl;
+        const auto row = *iter;
+        if(row)
+        {
+            //Get the data for the selected row, using our knowledge of the tree
+            //model:
+            int id = row[axis_columns.axis_col_id];
+            Glib::ustring name = row[axis_columns.axis_col_name];
+        }
     }
-  }
   else
-    cout << "invalid iter" << endl;
+  cout << "invalid iter" << endl;
 }
 
-Axis::Axis(std::string label, std::string description)
+Axis::Axis(int device, string label, string description)
 : Axis()
 {
+	this->device = device;
 	this->axis_label.set_label(label);
+	this->axis_label.set_halign(Gtk::ALIGN_END);
+	axis_label.set_halign(Gtk::ALIGN_END);
+	this->axis_label.set_justify(Gtk::JUSTIFY_RIGHT);
 	this->axis_dropdown.set_active_id(description);
 }
 

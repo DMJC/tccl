@@ -8,10 +8,12 @@
 #include <gtkmm/button.h>
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
+#include <gtkmm/orientable.h>
 #include <gtkmm/scrolledwindow.h>
+#include <gtkmm/separator.h>
 #include <gtkmm/window.h>
 #include "device_box.h"
-#include "axis_window.h"
+#include "binding_window.h"
 #include "axis_box.h"
 //#include "joy_button_window.h"
 #include "joy_button_box.h"
@@ -31,13 +33,15 @@ public:
 protected:
   void on_load_profile_button_clicked(const Glib::ustring& data);
   void on_create_profile_button_clicked(const Glib::ustring& data);
+  int profile_tracker;
   //Member widgets:
-  Axis_Window axes_window;
-//  Joy_Button_Window joy_button_window;
+  Binding_Window bindings_window;
   Gtk::Box w_box;
   Gtk::ScrolledWindow s_window;
   Gtk::Box d_box;
   Gtk::Box ab_box;
+  Gtk::Box profile_name_box;
+  Gtk::Label profile_label;
   Gtk::Button load_profile_button;
   Gtk::Button create_profile_button;
   std::vector<Device_Box*> all_devices;
